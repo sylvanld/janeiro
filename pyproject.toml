@@ -1,0 +1,25 @@
+[project]
+name = "janeiro"
+authors = [
+    {name = "Sylvan Le Deunff", email = "sylvan.ledeunff@gmail.com"},
+]
+description = "Python framework that cleanly takes care of micro-service technical details and let you focus on building high value software."
+readme = "README.md"
+requires-python = ">=3.7"
+keywords = ["janeiro", "framework"]
+license = {text = "BSD-3-Clause"}
+classifiers = [
+    "Framework :: Janeiro",
+    "Framework :: SQLAlchemy",
+    "Framework :: FastAPI",
+    "Programming Language :: Python :: 3",
+]
+dynamic = ["version", "dependencies"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements/lock.txt"]}
+version = {attr = "janeiro.__version__"}
+
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
