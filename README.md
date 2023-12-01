@@ -7,4 +7,4 @@ Python framework that cleanly takes care of micro-service technical details and 
 ## Features
 
 * [Configuration management](./docs/configuration.md)
-* Configurable logging
+* [Configurable logging](./docs/logging.md)
