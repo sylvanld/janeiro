@@ -16,8 +16,8 @@ install: $(VENV) ## Install dev. dependencies in a virtual env
 	$(VENV)/bin/pip install -e .[dev]
 
 format: requires-venv ## Apply formatting to package source code
-	$(VENV)/bin/isort janeiro
-	$(VENV)/bin/black janeiro
+	$(VENV)/bin/isort janeiro tests/
+	$(VENV)/bin/black janeiro tests/
 
 test: requires-venv ## Run package unit tests
-	$(VENV)/bin/python -m pytest tests
+	$(VENV)/bin/python -m pytest -vvv tests
