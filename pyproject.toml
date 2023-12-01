@@ -14,10 +14,21 @@ classifiers = [
     "Framework :: FastAPI",
     "Programming Language :: Python :: 3",
 ]
-dynamic = ["version", "dependencies"]
+dynamic = ["version"]
+dependencies = [
+    "click",
+    "fastapi",
+    "uvicorn"
+]
+
+[project.optional-dependencies]
+dev = [
+    "black==23.11.0",
+    "isort==5.12.0",
+    "pytest"
+]
 
 [tool.setuptools.dynamic]
-dependencies = {file = ["requirements/lock.txt"]}
 version = {attr = "janeiro.__version__"}
 
 [build-system]
