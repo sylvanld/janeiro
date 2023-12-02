@@ -1,0 +1,35 @@
+name: "Release"
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        required: true
+        description: "Version of the app to be released"
+      deploy_on_success:
+        type: boolean
+        default: false
+        description: "Automatic deployment on success"
+
+jobs:
+  git-release:
+    uses: sylvanld/github-workflows/.github/workflows/git-tag.yml@main
+    with:
+      git_tag: ${{ inputs.version }}
+      run_before: |
+        sed -i 's|X.Y.Z|${{ inputs.version }}|g' janeiro/__init__.py
+        git add janeiro/__init__.py
+
+        git config --global user.email 'action@github.com'
+        git config --global user.name 'Gitub Action'
+        git commit -m 'Release version ${{ inputs.version }}'
+
+  python-release:
+    needs: git-release
+    uses: sylvanld/github-workflows/.github/workflows/python-release.yml@main
+    secrets: inherit
+    with:
+      python_version: 3.10
+      repository_username: ${{ secrets.PYPI_USERNAME }}
+      repository_password: ${{ secrets.PYPI_PASSWORD }}
