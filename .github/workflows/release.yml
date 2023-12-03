@@ -7,10 +7,6 @@ on:
         type: string
         required: true
         description: "Version of the app to be released"
-      deploy_on_success:
-        type: boolean
-        default: false
-        description: "Automatic deployment on success"
 
 jobs:
   git-release:
