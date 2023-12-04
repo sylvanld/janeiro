@@ -6,5 +6,5 @@ Python framework that cleanly takes care of micro-service technical details and 
 
 ## Features
 
-* [Configuration management](./docs/configuration.md)
-* [Configurable logging](./docs/logging.md)
+* [Configuration management](https://sylvanld.github.io/python-janeiro/latest/configuration/)
+* [Configurable logging](https://sylvanld.github.io/python-janeiro/latest/logging/)
