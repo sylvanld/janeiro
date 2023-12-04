@@ -1,3 +1,5 @@
+import json
+import logging
 import logging.config
 from pathlib import Path
 
@@ -12,7 +14,7 @@ LOGGING_CONFIG_FILE_OPTION = ConfigOption(
 DEFAULT_LOGGING_CONFIG = {
     "version": 1,
     "disable_existing_loggers": True,
-    "formatters": {"standard": {"class": "pythonjsonlogger.jsonlogger.JsonFormatter"}},
+    "formatters": {"standard": {"class": "janeiro.logging.GELFFormatter"}},
     "handlers": {
         "default": {
             "level": "DEBUG",
@@ -22,8 +24,12 @@ DEFAULT_LOGGING_CONFIG = {
         }
     },
     "root": {"handlers": ["default"], "level": "DEBUG", "propagate": False},
+    "janeiro": {"handlers": ["default"], "level": "DEBUG", "propagate": False},
 }
 
+class GELFFormatter(logging.Formatter):
+    def format(self, record):
+        return json.dumps({"message": record.getMessage()})
 
 def get_logging_config(config: Config):
     """Get logging config from logging.config_file config option.

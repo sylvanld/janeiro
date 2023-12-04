@@ -1,21 +1,21 @@
 [project]
 name = "janeiro"
-authors = [
-    {name = "Sylvan Le Deunff", email = "sylvan.ledeunff@gmail.com"},
-]
+authors = [{ name = "Sylvan Le Deunff", email = "sylvan.ledeunff@gmail.com" }]
 description = "Python framework that cleanly takes care of micro-service technical details and let you focus on building high value software."
 readme = "README.md"
 requires-python = ">=3.7"
 keywords = ["janeiro", "framework"]
-license = {text = "BSD-3-Clause"}
-classifiers = [
-    "Programming Language :: Python :: 3",
-]
+license = { text = "BSD-3-Clause" }
+classifiers = ["Programming Language :: Python :: 3"]
 dynamic = ["version"]
 dependencies = [
+    "alembic",
     "click",
     "fastapi",
-    "uvicorn"
+    "python-json-logger",
+    "pyyaml",
+    "sqlalchemy",
+    "uvicorn",
 ]
 
 [project.urls]
@@ -23,14 +23,10 @@ Documentation = "https://sylvanld.github.io/python-janeiro/latest/"
 Source = "https://github.com/sylvanld/python-janeiro"
 
 [project.optional-dependencies]
-dev = [
-    "black==23.11.0",
-    "isort==5.12.0",
-    "pytest"
-]
+dev = ["black==23.11.0", "isort==5.12.0", "pytest"]
 
 [tool.setuptools.dynamic]
-version = {attr = "janeiro.__version__"}
+version = { attr = "janeiro.__version__" }
 
 [build-system]
 requires = ["setuptools", "setuptools-scm"]

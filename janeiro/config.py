@@ -3,11 +3,15 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from datetime import date, datetime
 from pathlib import Path
-from typing import Any, Dict, Generic, Type, TypeVar, Union
+from typing import Any, Dict, Generic, List, Type, TypeVar, Union
 
+from janeiro.context import get_app_context
 from janeiro.types import UNDEFINED
 
 T = TypeVar("T")
+
+
+_REGISTRY: List["ConfigOption"] = []
 
 
 @dataclass
@@ -17,6 +21,9 @@ class ConfigOption(Generic[T]):
     key: str
     type: Type[T]
     default: Any = UNDEFINED
+
+    def __post_init__(self):
+        _REGISTRY.append(self)
 
     def has_default(self):
         """Check whether this option provides a default value."""
@@ -77,6 +84,17 @@ class DictConfigSource(ConfigSource):
             raise MissingConfigError("Key is not defined in config: %s" % key)
 
 
+def get_environment_variable(prefix: str, key: str):
+    if prefix:
+        key = prefix + "." + key
+    variable = key.upper().replace(".", "_")
+
+    value = os.getenv(variable, UNDEFINED)
+    if value is UNDEFINED:
+        raise MissingConfigError("Missing environment variable: %s" % variable)
+    return value
+
+
 class EnvConfigSource(ConfigSource):
     """Defines how configuration is read from environment variables."""
 
@@ -85,14 +103,7 @@ class EnvConfigSource(ConfigSource):
         self.prefix = prefix
 
     def get(self, key):
-        if self.prefix:
-            key = self.prefix + "." + key
-        variable = key.upper().replace(".", "_")
-
-        value = os.getenv(variable, UNDEFINED)
-        if value is UNDEFINED:
-            raise MissingConfigError("Missing environment variable: %s" % variable)
-        return value
+        return get_environment_variable(self.prefix, key)
 
 
 class Config:
@@ -114,3 +125,39 @@ class Config:
                 self.cache[option.key] = option.get_default()
 
         return self.cache.get(option.key)
+
+    def list_options(self):
+        return _REGISTRY
+
+    def get_default(self):
+        default_config = {}
+        for option in _REGISTRY:
+            default_config[option.key] = option.default
+        return default_config
+
+
+class ConfigFactory:
+    @staticmethod
+    def _get_config_source():
+        context = get_app_context()
+        try:
+            return get_environment_variable(context.app_name, "config.source")
+        except MissingConfigError:
+            return "environment"
+
+    @staticmethod
+    def _create_env_config():
+        context = get_app_context()
+        return EnvConfigSource(prefix=context.app_name)
+
+    @classmethod
+    def make_instance(cls):
+        source_type = cls._get_config_source()
+        if source_type == "environment":
+            source = cls._create_env_config()
+        else:
+            raise ValueError
+        return Config(source)
+
+
+CONF: Config = ConfigFactory.make_instance()

@@ -1,0 +1,1 @@
+UNDEFINED = type("UNDEFINED", (object,), {})

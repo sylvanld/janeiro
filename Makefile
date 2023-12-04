@@ -20,4 +20,4 @@ format: requires-venv ## Apply formatting to package source code
 	$(VENV)/bin/black janeiro tests/
 
 test: requires-venv ## Run package unit tests
-	$(VENV)/bin/python -m pytest -vvv tests
+	$(VENV)/bin/python -m pytest -s -vvv tests
