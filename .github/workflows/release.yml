@@ -29,7 +29,3 @@ jobs:
     with:
       python_version: "3.10"
       git_tag: ${{ inputs.version }}
-    secrets:
-      repository_username: ${{ secrets.PYPI_USERNAME }}
-      repository_password: ${{ secrets.PYPI_PASSWORD }}
-      
