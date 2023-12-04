@@ -8,4 +8,3 @@ Python framework that cleanly takes care of micro-service technical details and 
 
 * [Configuration management](./docs/configuration.md)
 * [Configurable logging](./docs/logging.md)
-https://raw.githubusercontent.com/sylvanld/python-janeiro/main/docs/img/janeiro.jpg
