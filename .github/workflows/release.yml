@@ -21,13 +21,19 @@ jobs:
         git config --global user.name 'Gitub Action'
         git commit -m 'Release version ${{ inputs.version }}'
 
+  docs-release:
+    needs: git-release
+    uses: sylvanld/github-workflows/.github/workflows/docs-release.yml@main
+    with:
+      git_tag: ${{ inputs.version }}
+
   python-release:
     needs: git-release
     uses: sylvanld/github-workflows/.github/workflows/python-release.yml@main
     permissions:
       id-token: write
     with:
-      python_version: "3.10"
       git_tag: ${{ inputs.version }}
+      python_version: "3.10"
     secrets:
       pypi_token: ${{ secrets.PYPI_PASSWORD }}
