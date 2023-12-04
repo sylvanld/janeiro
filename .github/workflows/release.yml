@@ -25,7 +25,7 @@ jobs:
     needs: git-release
     uses: sylvanld/github-workflows/.github/workflows/python-release.yml@main
     with:
-      python_version: 3.10
+      python_version: "3.10"
     secrets:
       repository_username: ${{ secrets.PYPI_USERNAME }}
       repository_password: ${{ secrets.PYPI_PASSWORD }}
