@@ -19,6 +19,7 @@ dependencies = [
 ]
 
 [project.urls]
+Documentation = "https://sylvanld.github.io/python-janeiro/latest/"
 Source = "https://github.com/sylvanld/python-janeiro"
 
 [project.optional-dependencies]
