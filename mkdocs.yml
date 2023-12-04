@@ -1,3 +1,6 @@
+site_name: Janeiro
+repo_url: https://github.com/sylvanld/python-janeiro
+
 theme:
   name: material
 
