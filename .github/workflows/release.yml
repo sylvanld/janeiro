@@ -24,6 +24,8 @@ jobs:
   python-release:
     needs: git-release
     uses: sylvanld/github-workflows/.github/workflows/python-release.yml@main
+    permissions:
+      id-token: write
     with:
       python_version: "3.10"
       git_tag: ${{ inputs.version }}
