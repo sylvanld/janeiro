@@ -9,9 +9,6 @@ requires-python = ">=3.7"
 keywords = ["janeiro", "framework"]
 license = {text = "BSD-3-Clause"}
 classifiers = [
-    "Framework :: Janeiro",
-    "Framework :: SQLAlchemy",
-    "Framework :: FastAPI",
     "Programming Language :: Python :: 3",
 ]
 dynamic = ["version"]
@@ -20,6 +17,9 @@ dependencies = [
     "fastapi",
     "uvicorn"
 ]
+
+[project.urls]
+Source = "https://github.com/sylvanld/python-janeiro"
 
 [project.optional-dependencies]
 dev = [
